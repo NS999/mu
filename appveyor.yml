@@ -1,7 +1,7 @@
 environment:
   matrix:
-    - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4.3"
+    - PYTHON: "C:\\Python35"
+      PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "32"
 
 platform: x86
@@ -30,11 +30,11 @@ init:
   - cmd: pip freeze
 
 install:
-  # Temporary fix for PyQt not being installed in correct directory: https://github.com/appveyor/ci/issues/363
-  - REG ADD HKCU\Software\Python\PythonCore\3.4\InstallPath /f /ve /t REG_SZ /d C:\Python34
+  # Fix for PyQt not being installed in correct directory: https://github.com/appveyor/ci/issues/363
+  - cmd: REG ADD HKCU\Software\Python\PythonCore\3.5\InstallPath /f /ve /t REG_SZ /d C:\Python35
 
-  # Download PyQt5 with 10min timeout, rename to pyqt5_installer.exe, and install
-  - ps: Start-FileDownload 'http://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.4.2/PyQt5-5.4.2-gpl-Py3.4-Qt5.4.2-x32.exe' -FileName pyqt5_installer.exe -Timeout 600000
+  # Download PyQt5 with 10 min timeout, rename to pyqt5_installer.exe, and install
+  - ps: Start-FileDownload 'http://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.6/PyQt5-5.6-gpl-Py3.5-Qt5.6.0-x32-2.exe' -FileName pyqt5_installer.exe -Timeout 600000
   - cmd: pyqt5_installer.exe /S
   - cmd: python -c "import PyQt5"
 
